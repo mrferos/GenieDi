@@ -25,7 +25,8 @@ $genie->register('foobaz', function(ContainerInterop $container) {
 	return new Foo($container->get('other-dep');
 });
 
-// bit of a caveat here, the register method doesn't recognize a class with an __invoke method as a factory, so instead we can do this:
+// bit of a caveat here, the register method doesn't recognize a class with an 
+// __invoke method as a factory, so instead we can do this:
 $genie->registerFactory('foobaz', FooBazFactory::class);
 
 return $genie->get('foobaz'); // will return an instance of Foo
