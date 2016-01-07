@@ -87,7 +87,7 @@ class Container implements ContainerInterface
      * @param string $id
      * @param callable $factory
      */
-    public function registerFactory($id, callable $factory)
+    public function registerFactory($id, $factory)
     {
         $this->serviceFactories[$id] = $factory;
     }
@@ -244,8 +244,15 @@ class Container implements ContainerInterface
             // catch any exception during the service generation
             // and emit a GenieException instead
             try {
+                // If we got a class string as a factory, instantiate it
+                $factory = $this->serviceFactories[$id];
+                if (is_string($factory) && class_exists($factory)) {
+                    $reflFactory = new \ReflectionClass($factory);
+                    $factory = $reflFactory->newInstance();
+                }
+
                 // Did the factory not return an object? error out!
-                $service = call_user_func($this->serviceFactories[$id], $this);
+                $service = call_user_func($factory, $this);
                 if (!is_object($service)) {
                     throw new GenieException("$id factory does not resolve to an object");
                 }
