@@ -1,0 +1,20 @@
+{
+    "name": "mrferos/genie-di",
+    "description": "A container for fun!",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andres Galindo",
+            "email": "me@andresgalindo.us"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "GenieDi\\": "src/"
+        }
+    },
+    "require": {
+        "container-interop/container-interop": "^1.1"
+    }
+}
